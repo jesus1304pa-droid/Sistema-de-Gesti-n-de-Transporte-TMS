@@ -11,28 +11,31 @@ import java.util.Optional;
 public class ConductorService {
 
     private final ConductorRepository conductorRepository;
+    // TODO: Inyecta el repositorio de viajes de tu equipo cuando lo tengan integrado
+    // private final ViajeRepository viajeRepository;
 
-    public ConductorService(ConductorRepository conductorRepository) {
+    public ConductorService(ConductorRepository conductorRepository /*, ViajeRepository viajeRepository*/) {
         this.conductorRepository = conductorRepository;
+        // this.viajeRepository = viajeRepository;
     }
 
     public List<Conductor> listarConductores() {
-        return conductorRepository.obtenerTodos();
+        return conductorRepository.findAll();
     }
 
     public Optional<Conductor> obtenerConductorPorId(Long id) {
-        return conductorRepository.obtenerPorId(id);
+        return conductorRepository.findById(id);
     }
 
     public Conductor registrarConductor(Conductor conductor) {
         if (conductor.getEstado() == null || conductor.getEstado().isEmpty()) {
             conductor.setEstado("ACTIVO");
         }
-        return conductorRepository.guardar(conductor);
+        return conductorRepository.save(conductor);
     }
 
     public Optional<Conductor> actualizarConductor(Long id, Conductor conductorDetalles) {
-        return conductorRepository.obtenerPorId(id).map(conductor -> {
+        return conductorRepository.findById(id).map(conductor -> {
             conductor.setNombre(conductorDetalles.getNombre());
             conductor.setApellido(conductorDetalles.getApellido());
             conductor.setDni(conductorDetalles.getDni());
@@ -41,11 +44,16 @@ public class ConductorService {
             conductor.setFechaVencimientoLicencia(conductorDetalles.getFechaVencimientoLicencia());
             conductor.setTelefono(conductorDetalles.getTelefono());
             conductor.setEstado(conductorDetalles.getEstado());
-            return conductorRepository.guardar(conductor);
+            return conductorRepository.save(conductor);
         });
     }
 
     public boolean eliminarConductor(Long id) {
-        return conductorRepository.eliminarPorId(id);
+        if (!conductorRepository.existsById(id)) {
+            return false;
+        }
+
+        conductorRepository.deleteById(id);
+        return true;
     }
 }
