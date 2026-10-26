@@ -1,6 +1,6 @@
-package com.example.demo.dao;
+package com.utp.tmspaucars.dao;
 
-import com.example.demo.models.conductor.Conductor;
+import com.utp.tmspaucars.models.conductor.Conductor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

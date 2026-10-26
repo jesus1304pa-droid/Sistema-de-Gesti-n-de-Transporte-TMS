@@ -1,7 +1,7 @@
-package com.example.demo.services;
+package com.utp.tmspaucars.services;
 
-import com.example.demo.dao.ConductorRepository;
-import com.example.demo.models.conductor.Conductor;
+import com.utp.tmspaucars.dao.ConductorRepository;
+import com.utp.tmspaucars.models.conductor.Conductor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
